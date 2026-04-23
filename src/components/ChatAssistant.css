@@ -1,0 +1,139 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  height: 100%;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.chat-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.chat-header h2 {
+  font-size: 1.1rem;
+  margin: 0;
+  margin-right: 12px;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: var(--radius-full);
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: var(--bg-color);
+}
+
+.message-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.message-wrapper.user {
+  justify-content: flex-end;
+}
+
+.message-wrapper.bot {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: var(--radius-lg);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  box-shadow: var(--shadow-sm);
+}
+
+.message-bubble.user {
+  background-color: var(--accent-color);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.message-bubble.bot {
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-bottom-left-radius: 4px;
+}
+
+.quick-questions {
+  padding: 12px 20px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  background-color: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+}
+
+.quick-questions::-webkit-scrollbar {
+  height: 4px;
+}
+
+.quick-btn {
+  white-space: nowrap;
+  padding: 6px 12px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.quick-btn:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: var(--card-bg);
+  gap: 12px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: var(--transition);
+}
+
+.chat-input:focus {
+  border-color: var(--text-secondary);
+}
+
+.send-btn {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.send-btn:hover {
+  background-color: var(--accent-hover);
+}
