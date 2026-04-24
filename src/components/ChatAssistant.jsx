@@ -71,7 +71,13 @@ const ChatAssistant = () => {
       const botReply = data.candidates[0].content.parts[0].text;
       setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'bot', text: botReply }]);
     } catch (error) {
-      setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'bot', text: `Error: ${error.message}. Please check your Gemini API key.` }]);
+      console.error("Gemini API Error:", error);
+      // Fallback to mock data on error (e.g., leaked key, invalid key, rate limit)
+      setTimeout(() => {
+        const fallbackResponse = generateBotResponse(text);
+        const botMsg = { id: Date.now() + 1, sender: 'bot', text: `[Fallback Mode - API Error] ${fallbackResponse}` };
+        setMessages(prev => [...prev, botMsg]);
+      }, 600);
     } finally {
       setIsTyping(false);
     }
