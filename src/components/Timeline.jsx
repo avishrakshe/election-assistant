@@ -6,7 +6,7 @@ import { electionProcessSteps } from '../utils/mockData';
 const Timeline = () => {
   return (
     <div className="timeline-container animate-fade-in">
-      {electionProcessSteps.map((step, index) => (
+      {electionProcessSteps.map((step) => (
         <div key={step.id} className="timeline-item">
           <div className="timeline-marker">
             <span className="marker-icon">{step.icon}</span>

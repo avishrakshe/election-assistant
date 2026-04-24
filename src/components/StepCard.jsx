@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './StepCard.css';
 
 const StepCard = ({ step }) => {
@@ -11,6 +12,14 @@ const StepCard = ({ step }) => {
       <p className="step-description">{step.description}</p>
     </div>
   );
+};
+
+StepCard.propTypes = {
+  step: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    timeline: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default StepCard;
