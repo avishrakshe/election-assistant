@@ -39,7 +39,7 @@ export const electionProcessSteps = [
 export const quickQuestions = [
   "How do I register to vote?",
   "What are the key dates?",
-  "Tell me about the campaigning phase.",
+  "Draw a timeline of the election process",
   "When are results declared?"
 ];
 
@@ -63,8 +63,18 @@ export const generateBotResponse = (query) => {
     return "On Election Day, registered voters head to polling stations to cast their ballots. Many regions also offer early voting or mail-in voting options to ensure maximum participation.";
   }
   if (lowerQuery.includes("hello") || lowerQuery.includes("hi")) {
-    return "Hello! I am your Election Process Assistant. You can ask me about registration, campaigning, voting, or the timeline. How can I help you today?";
+    return "Hello! I am your AI Assistant. You can ask me about anything! How can I help you today?";
+  }
+  if (lowerQuery.includes("diagram") || lowerQuery.includes("timeline") || lowerQuery.includes("flowchart")) {
+    return `Here is a visual timeline of the election process:
+\`\`\`mermaid
+graph TD
+    A[Voter Registration] --> B[Campaigning Phase]
+    B --> C[Election Day Voting]
+    C --> D[Ballot Counting]
+    D --> E[Declaration of Results]
+\`\`\``;
   }
   
-  return "That's an interesting question about the election process. Elections typically revolve around registration, campaigning, voting day, and the result counting. Could you clarify which phase you're asking about?";
+  return "I am currently running in fallback mode without a valid API key, so I can only answer predefined questions. Please add a valid Gemini API key to your `.env` file so I can answer your specific question!";
 };

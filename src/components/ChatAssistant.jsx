@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { generateBotResponse, quickQuestions } from '../utils/mockData';
+import MermaidChart from './MermaidChart';
 import './ChatAssistant.css';
 
 const ChatAssistant = () => {
@@ -33,7 +34,7 @@ const ChatAssistant = () => {
     if (!apiKey) {
       setTimeout(() => {
         const fallbackResponse = generateBotResponse(text);
-        const botMsg = { id: Date.now() + 1, sender: 'bot', text: `[Fallback Mode - No API Key Found] ${fallbackResponse}` };
+        const botMsg = { id: Date.now() + 1, sender: 'bot', text: fallbackResponse };
         setMessages(prev => [...prev, botMsg]);
         setIsTyping(false);
       }, 600);
@@ -47,7 +48,7 @@ const ChatAssistant = () => {
         parts: [{ text: m.text }]
       }));
 
-      const systemPrompt = "You are a professional AI assistant focused on explaining the election process, voting systems, and political timelines. Keep your answers concise, informative, and highly objective. User Question: ";
+      const systemPrompt = "You are a professional AI assistant. You can answer any questions the user asks, even if they are irrelevant to elections. Keep your answers concise, informative, and highly objective. You can and should use Mermaid.js syntax (```mermaid) to generate visual flowcharts, timelines, or diagrams whenever requested or when explaining a multi-step process or structural concept. User Question: ";
       
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
         method: 'POST',
@@ -75,7 +76,7 @@ const ChatAssistant = () => {
       // Fallback to mock data on error (e.g., leaked key, invalid key, rate limit)
       setTimeout(() => {
         const fallbackResponse = generateBotResponse(text);
-        const botMsg = { id: Date.now() + 1, sender: 'bot', text: `[Fallback Mode - API Error] ${fallbackResponse}` };
+        const botMsg = { id: Date.now() + 1, sender: 'bot', text: fallbackResponse };
         setMessages(prev => [...prev, botMsg]);
       }, 600);
     } finally {
@@ -95,7 +96,23 @@ const ChatAssistant = () => {
         {messages.map((msg) => (
           <div key={msg.id} className={`message-wrapper ${msg.sender}`}>
             <div className={`message-bubble ${msg.sender} markdown-body`}>
-              <ReactMarkdown>{msg.text}</ReactMarkdown>
+              <ReactMarkdown
+                components={{
+                  code({node, inline, className, children, ...props}) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    if (!inline && match && match[1] === 'mermaid') {
+                      return <MermaidChart chart={String(children).replace(/\n$/, '')} />;
+                    }
+                    return (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  }
+                }}
+              >
+                {msg.text}
+              </ReactMarkdown>
             </div>
           </div>
         ))}
