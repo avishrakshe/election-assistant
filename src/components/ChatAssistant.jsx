@@ -48,7 +48,7 @@ const ChatAssistant = () => {
         parts: [{ text: m.text }]
       }));
 
-      const systemPrompt = "You are a professional AI assistant. You can answer any questions the user asks, even if they are irrelevant to elections. Keep your answers concise, informative, and highly objective. You can and should use Mermaid.js syntax (```mermaid) to generate visual flowcharts, timelines, or diagrams whenever requested or when explaining a multi-step process or structural concept. User Question: ";
+      const systemPrompt = "You are a professional AI assistant. You can answer any questions the user asks, even if they are irrelevant to elections. Keep your answers concise, informative, and highly objective. You can and should use Mermaid.js syntax (```mermaid) to generate visual flowcharts, timelines, or diagrams whenever requested or when explaining a multi-step process or structural concept. CRITICAL RULE FOR MERMAID: Always wrap the text labels of nodes in double quotes to prevent parsing errors (e.g. `A[\"Step 1 (Start)\"] --> B[\"Step 2\"]`). User Question: ";
       
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
         method: 'POST',
