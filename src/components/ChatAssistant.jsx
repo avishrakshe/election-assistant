@@ -58,7 +58,7 @@ const ChatAssistant = () => {
     // If the developer hasn't configured the API key, fallback to local mock data
     if (!apiKey) {
       setTimeout(() => {
-        const fallbackResponse = generateBotResponse(text);
+        const fallbackResponse = generateBotResponse(text, language);
         const botMsg = { id: Date.now() + 1, sender: 'bot', text: fallbackResponse };
         setMessages(prev => [...prev, botMsg]);
         setIsTyping(false);
@@ -110,7 +110,7 @@ const ChatAssistant = () => {
       console.error("Gemini API Error:", error);
       // Fallback to mock data on error (e.g., leaked key, invalid key, rate limit)
       setTimeout(() => {
-        const fallbackResponse = generateBotResponse(text);
+        const fallbackResponse = generateBotResponse(text, language);
         const botMsg = { id: Date.now() + 1, sender: 'bot', text: fallbackResponse };
         setMessages(prev => [...prev, botMsg]);
       }, 600);
